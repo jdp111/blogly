@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Home Page</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+
+<img id = "pic" src= {{userData.image_url}} >
+
+<span id = "name">{{userData.first_name}} {{userData.last_name}}</span>
+
+<form  action="/users/{{id}}/edit">
+    <input id = "edit" type = "submit"  value = "Edit"></input>
+</form>
+
+<form  action="/users/{{id}}/delete", method = 'POST'>
+    <input id = "delete" type = "submit"  value = "Delete"></input>
+</form>
+
+</body>
+
+</html>

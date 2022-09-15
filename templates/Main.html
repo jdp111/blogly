@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Blogly</title>
+
+</head>
+
+<body>
+<header>Users</header>
+<ul>
+    {% for name in users%}
+        <li>
+            <a href = "/users/{{name.id}}">{{name.first_name}} {{name.last_name}}</a>
+        </li>
+    {% endfor %}
+</ul>
+
+<form action="/users/new">
+    <input type="submit" value = "New User">
+</form>
+    
+
+</body>
+
+</html>

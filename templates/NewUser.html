@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Blogly New User</title>
+<link rel="stylesheet" href="/static/style.css">
+<header>Create User</header>
+</head>
+
+<body>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for msg in messages %}
+                <p class = 'error'>{{msg}}</p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <form action = "/users/new", method = "POST">
+    
+        <span>First Name:</span> <br>
+            <input name = "first" type = "text"> <br>
+        <span>Last Name:</span> <br>
+            <input name = 'last' type = 'text'> <br>
+        <span>Image URL:</span> <br>
+            <input name = 'image' type = 'text'> <br>
+        <input id = 'FormSubmit' type = 'submit' value = 'submit'>
+
+    </form>
+
+</body>
+
+</html>
