@@ -89,7 +89,7 @@ def editUserPage(userID):
     return render_template('edit_user.html', userData = Data)
 
 
-@app.route("/users/<userID>/add-post", methods = ['POST'])
+@app.route("/users/<userID>/posts/new", methods = ['POST'])
 def addPost(userID):
     Data = User.query.get_or_404(userID)
     result = request.form
@@ -98,7 +98,7 @@ def addPost(userID):
     
     if not newcontent or not newtitle:
         flash("Must include title and content")
-        return redirect(f"/users/{userID}/new-post")
+        return redirect(f"/users/{userID}/posts/new")
     
     newPost = Post(title = newtitle, content = newcontent, user_id = userID)
     db.session.add(newPost)
@@ -108,6 +108,6 @@ def addPost(userID):
     return redirect(f"/users/{userID}")
 
 
-@app.route('/users/<userID>/new-post')
+@app.route('/users/<userID>/posts/new')
 def newPost(userID):
     return render_template('new_post.html', userid = userID)
