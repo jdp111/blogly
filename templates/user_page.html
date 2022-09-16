@@ -19,19 +19,22 @@
     <input id = "delete" type = "submit"  value = "Delete"></input>
 </form>
 
-{% if userPosts %}
-    <h1>Posts:</h1>
-{% endif %}
 
 <ul id = 'postList'>
+
+    {% if userPosts %}
+        <h1>Posts:</h1>
+    {% endif %}
+
+
 {% for post in userPosts %}
-    <li>
-        <a href = '/users/{{id}}/{{post.id}}'>post.title</a>
+    <li id = "listItem">
+        <a  href = '/users/{{id}}/{{post.id}}'>{{post.title}}</a>
     </li>
 {% endfor %}
 
-    <form id = 'addPost' action="/users/{{id}}/new-post">
-        <input type="submit" value="Add Post">
+    <form  action="/users/{{id}}/new-post">
+        <input id = 'addPost' type="submit" value="Add Post">
     </form>
 
 </ul>

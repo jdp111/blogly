@@ -1,11 +1,9 @@
-
-
 <!DOCTYPE html>
 <html>
 <head>
-<title>Blogly New User</title>
+<title>Blogly New Post</title>
 <link rel="stylesheet" href="/static/style.css">
-<header>Create User</header>
+<header>New Post</header>
 </head>
 
 <body>
@@ -18,14 +16,12 @@
         {% endif %}
     {% endwith %}
 
-    <form action = "/users/new", method = "POST">
+    <form action = "/users/{{userid}}/add-post", method = "POST">
     
-        <span>First Name:</span> <br>
-            <input name = "first" type = "text"> <br>
-        <span>Last Name:</span> <br>
-            <input name = 'last' type = 'text'> <br>
-        <span>Image URL:</span> <br>
-            <input name = 'image' type = 'text'> <br>
+        <span>Post Title:</span> <br>
+            <input name = "title" type = "text"> <br>
+        <span>Post Content:</span> <br>
+            <input name = 'content' type = 'text'> <br>
         <input id = 'FormSubmit' type = 'submit' value = 'submit'>
 
     </form>

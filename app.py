@@ -1,7 +1,7 @@
 """Blogly application."""
 
 from flask import Flask, render_template, redirect, request, flash
-from models import db, connect_db, User
+from models import db, connect_db, User, Post
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = "Shoutitfromthemountaintopzarathustra"
@@ -77,7 +77,7 @@ def editUser(userID):
 
     userData.first_name = first
     userData.last_name = last
-    userData.image = image
+    userData.image_url = image
 
     db.session.commit()
 
@@ -89,10 +89,25 @@ def editUserPage(userID):
     return render_template('edit_user.html', userData = Data)
 
 
-@app.route('/users/<userID>/addPost', methods = ['POST'])
+@app.route("/users/<userID>/add-post", methods = ['POST'])
 def addPost(userID):
     Data = User.query.get_or_404(userID)
+    result = request.form
+    newtitle = result['title']
+    newcontent = result['content']
+    
+    if not newcontent or not newtitle:
+        flash("Must include title and content")
+        return redirect(f"/users/{userID}/new-post")
+    
+    newPost = Post(title = newtitle, content = newcontent, user_id = userID)
+    db.session.add(newPost)
+    db.session.commit()
+
     Posts = Data.post
-    return redirect(f"/users/{userID}", userData = Data, userPosts = Posts )
+    return redirect(f"/users/{userID}")
 
 
+@app.route('/users/<userID>/new-post')
+def newPost(userID):
+    return render_template('new_post.html', userid = userID)
