@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Blogly Edit Post</title>
+<link rel="stylesheet" href="/static/style.css">
+<header>Edit Post</header>
+</head>
+
+<body>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for msg in messages %}
+                <p class = 'error'>{{msg}}</p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <form action = "/posts/{{post.id}}/edit", method = "POST">
+    
+        <span>Post Title:</span> <br>
+            <input name = "title" type = "text" value = {{post.title}}></input><br>
+        <span>Post Content:</span> <br>
+            <input name = 'content' type = 'text' value = {{post.content}}> <br>
+        <input id = 'FormSubmit' type = 'submit' value = 'submit'>
+
+    </form>
+
+</body>
+
+</html>

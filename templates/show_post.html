@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Blogly Post</title>
+<link rel="stylesheet" href="/static/style.css">
+<h1 id = 'posttitle'>{{Post.title}}</h1>
+</head>
+
+<body>
+
+    <p>{{Post.content}}</p>
+
+    <p>author: {{author.first_name}} {{author.last_name}}</p>
+
+    <div class = 'buttons'>
+        <form action = "/users/{{author.id}}">
+            <input id = 'back' type = 'submit' value = 'Back'>
+        </form>
+
+        <form action = "/posts/{{Post.id}}/edit">
+            <input id = 'editpost' type = 'submit' value = 'Edit'>
+        </form>
+
+        <form action = "/posts/{{Post.id}}/delete", method = "POST">
+            <input id = 'deletepost' type = 'submit' value = 'Delete'>
+        </form>
+    </div>
+</body>
+
+</html>

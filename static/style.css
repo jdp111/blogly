@@ -59,3 +59,16 @@
 #listItem{
     margin-bottom: 5px;
 }
+
+.buttons{
+    margin-left: 50px;
+    margin-top: 20px;
+}
+div form{
+    margin-left: 4px;
+    display:inline-block;
+}
+
+#posttitle{
+    margin-left: 10%;
+}

@@ -12,11 +12,11 @@ app.config['SQLALCHEMY_ECHO'] = True
 connect_db(app)
 db.create_all()
 
+
 @app.route('/')
 def frontPage():
     table = User.query.order_by(User.last_name, User.first_name ).all()
     return render_template('Main.html', users = table)
-
 
 
 @app.route('/users/new')
@@ -66,7 +66,6 @@ def deleteUser(userID):
     return redirect('/')
 
 
-
 @app.route('/users/<userID>/edit', methods = ['POST'])
 def editUser(userID):
     userData = User.query.get_or_404(userID)
@@ -82,6 +81,7 @@ def editUser(userID):
     db.session.commit()
 
     return redirect("/")
+
 
 @app.route('/users/<userID>/edit')
 def editUserPage(userID):
@@ -111,3 +111,44 @@ def addPost(userID):
 @app.route('/users/<userID>/posts/new')
 def newPost(userID):
     return render_template('new_post.html', userid = userID)
+
+
+@app.route('/posts/<postID>')
+def singlePost(postID):
+    singlePost = Post.query.get_or_404(postID)
+    return render_template('show_post.html', Post = singlePost, author = singlePost.user)
+
+
+@app.route('/posts/<postID>/edit')
+def editPost(postID):
+    singlePost = Post.query.get_or_404(postID)
+    return render_template('edit_post.html', post = singlePost)
+
+
+@app.route('/posts/<postID>/edit', methods = ['POST'])
+def confirmEdit(postID):
+    result = request.form
+    newtitle = result['title']
+    newcontent = result['content']
+
+    if not newcontent or not newtitle:
+        flash("Must include title and content")
+        return redirect(f"/posts/{postID}/edit")
+    
+
+    singlePost = Post.query.get_or_404(postID)
+
+    singlePost.title = newtitle
+    singlePost.content = newcontent
+    db.session.commit()
+    return redirect(f"/posts/{postID}")
+
+
+@app.route('/posts/<postID>/delete',methods = ['POST'])
+def deletePost(postID):
+    postData = Post.query.get_or_404(postID)
+    userID = postData.user.id
+    db.session.delete(postData)
+    db.session.commit()
+    return redirect(f"/users/{userID}")
+    
