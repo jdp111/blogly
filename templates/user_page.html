@@ -7,7 +7,7 @@
 
 <body>
 
-<img id = "pic" src= {{userData.image_url}} >
+<img id = "pic" src= {{userData.image_url}} width = '180' height = '180'>
 
 <span id = "name">{{userData.first_name}} {{userData.last_name}}</span>
 
@@ -18,6 +18,24 @@
 <form  action="/users/{{id}}/delete", method = 'POST'>
     <input id = "delete" type = "submit"  value = "Delete"></input>
 </form>
+
+{% if userPosts %}
+    <h1>Posts:</h1>
+{% endif %}
+
+<ul id = 'postList'>
+{% for post in userPosts %}
+    <li>
+        <a href = '/users/{{id}}/{{post.id}}'>post.title</a>
+    </li>
+{% endfor %}
+
+    <form id = 'addPost' action="/users/{{id}}/new-post">
+        <input type="submit" value="Add Post">
+    </form>
+
+</ul>
+
 
 </body>
 

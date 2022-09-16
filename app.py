@@ -52,7 +52,8 @@ def addNew():
 @app.route('/users/<userID>')
 def userpage(userID):
     Data = User.query.get_or_404(userID)
-    return render_template('user_page.html', userData = Data, id = userID)
+    posts = Data.post
+    return render_template('user_page.html', userData = Data, id = userID, userPosts = posts)
 
 
 @app.route('/users/<userID>/delete', methods = ['POST'])
@@ -88,5 +89,10 @@ def editUserPage(userID):
     return render_template('edit_user.html', userData = Data)
 
 
+@app.route('/users/<userID>/addPost', methods = ['POST'])
+def addPost(userID):
+    Data = User.query.get_or_404(userID)
+    Posts = Data.post
+    return redirect(f"/users/{userID}", userData = Data, userPosts = Posts )
 
 
