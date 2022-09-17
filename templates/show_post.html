@@ -12,6 +12,16 @@
 
     <p>author: {{author.first_name}} {{author.last_name}}</p>
 
+    <div class = 'tags'>
+        <span>Tags: </span>
+
+        {% for tag in tags %}
+        <span class = 'singletag'>{{tag.name}}</span>
+
+        {% endfor %}
+
+    </div>
+
     <div class = 'buttons'>
         <form action = "/users/{{author.id}}">
             <input id = 'back' type = 'submit' value = 'Back'>
@@ -25,19 +35,6 @@
             <input id = 'deletepost' type = 'submit' value = 'Delete'>
         </form>
     </div>
-
-
-    <form action="">
-        {% for tag in tags %}
-        <input type="checkbox" name={{tag}} value="Bike">
-        
-        <label for={{tag}}> {{tag}}</label><br>
-
-        {% endfor %}
-
-        <input type="submit" value = ''>
-    </form>
-
 
 
 </body>

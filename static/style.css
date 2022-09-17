@@ -37,7 +37,7 @@
 #FormSubmit{
     margin-top: 20px;
     margin-left: 20px;
-    font-size: 25px;
+    font-size: 22px;
     color:aliceblue;
     background-color: green;
     border-radius: 8px;
@@ -71,4 +71,12 @@ div form{
 
 #posttitle{
     margin-left: 10%;
+}
+
+.singletag{
+    background-color: lightskyblue;
+    padding-left: 5px;
+    padding-right: 5px;
+    border-radius: 5px;
+    margin-left: 4px;
 }

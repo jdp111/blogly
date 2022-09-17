@@ -22,8 +22,18 @@
             <input name = "title" type = "text"> <br>
         <span>Post Content:</span> <br>
             <input name = 'content' type = 'text'> <br>
-        <input id = 'FormSubmit' type = 'submit' value = 'submit'>
+        
 
+
+        {% for tag in tags %}
+        <input type="checkbox" name={{tag.id}}>
+        
+        <label for={{tag.id}}> {{tag.name}}</label><br>
+
+        {% endfor %}
+
+        <input id = 'FormSubmit' type = 'submit' value = 'submit'>
+        
     </form>
 
 </body>

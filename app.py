@@ -1,7 +1,7 @@
 """Blogly application."""
 
 from flask import Flask, render_template, redirect, request, flash
-from models import db, connect_db, User, Post, Tag
+from models import db, connect_db, User, Post, Tag, PostTag
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = "Shoutitfromthemountaintopzarathustra"
@@ -91,7 +91,6 @@ def editUserPage(userID):
 
 @app.route("/users/<userID>/posts/new", methods = ['POST'])
 def addPost(userID):
-    Data = User.query.get_or_404(userID)
     result = request.form
     newtitle = result['title']
     newcontent = result['content']
@@ -99,42 +98,73 @@ def addPost(userID):
     if not newcontent or not newtitle:
         flash("Must include title and content")
         return redirect(f"/users/{userID}/posts/new")
-    
+
     newPost = Post(title = newtitle, content = newcontent, user_id = userID)
     db.session.add(newPost)
     db.session.commit()
 
-    Posts = Data.post
+    tags = Tag.query.all()
+    
+    for key, value in result.items():
+        
+        if value == "on":
+            tagID = Tag.query.get(key).id
+            newRelation = PostTag(post_id = newPost.id, tag_id =tagID)
+            db.session.add(newRelation)
+        
+    db.session.commit()
+
     return redirect(f"/users/{userID}")
 
 
 @app.route('/users/<userID>/posts/new')
 def newPost(userID):
-    return render_template('new_post.html', userid = userID)
+    tagOptions = Tag.query.all()
+    return render_template('new_post.html', userid = userID, tags = tagOptions)
 
 
 @app.route('/posts/<postID>')
 def singlePost(postID):
     singlePost = Post.query.get_or_404(postID)
-    return render_template('show_post.html', Post = singlePost, author = singlePost.user)
+    tagList = singlePost.tag
+
+    return render_template('show_post.html', Post = singlePost, author = singlePost.user, tags =tagList )
 
 
 @app.route('/posts/<postID>/edit')
 def editPost(postID):
     singlePost = Post.query.get_or_404(postID)
-    return render_template('edit_post.html', post = singlePost)
+    tagList = Tag.query.all()
+    return render_template('edit_post.html', post = singlePost, tags = tagList)
 
 
 @app.route('/posts/<postID>/edit', methods = ['POST'])
 def confirmEdit(postID):
     result = request.form
     newtitle = result['title']
-    newcontent = result['content']
-
+    newcontent = result['content'] 
+    
     if not newcontent or not newtitle:
         flash("Must include title and content")
         return redirect(f"/posts/{postID}/edit")
     
+    previousTags = PostTag.query.filter_by(post_id = postID).all()
+
+    for tag in previousTags:
+        db.session.delete(tag)
+    db.session.commit()
+
+    tags = Tag.query.all()
+    
+    for key, value in result.items():
+        
+        if value == "on":
+            tagID = Tag.query.get(key).id
+            newRelation = PostTag(post_id = postID, tag_id =tagID)
+            db.session.add(newRelation)
+        
+    db.session.commit()
+   
 
     singlePost = Post.query.get_or_404(postID)
 

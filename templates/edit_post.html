@@ -3,7 +3,7 @@
 <head>
 <title>Blogly Edit Post</title>
 <link rel="stylesheet" href="/static/style.css">
-<header>Edit Post</header>
+<h1>Edit Post</h1>
 </head>
 
 <body>
@@ -21,10 +21,19 @@
         <span>Post Title:</span> <br>
             <input name = "title" type = "text" value = {{post.title}}></input><br>
         <span>Post Content:</span> <br>
-            <input name = 'content' type = 'text' value = {{post.content}}> <br>
-        <input id = 'FormSubmit' type = 'submit' value = 'submit'>
+            <input name = 'content' type = 'text' value = {{post.content}}> <br> <br>
+        
 
+        {% for tag in tags %}
+        <input type="checkbox" name={{tag.id}}>
+        <label for={{tag.id}}> {{tag.name}}</label><br>
+
+        {% endfor %}
+        <input id = 'FormSubmit' type = 'submit' value = 'submit'>
     </form>
+
+
+
 
 </body>
 

@@ -29,6 +29,17 @@
 
     </form>
 
+    <form action="">
+        {% for tag in tags %}
+        <input type="checkbox" name={{tag}} >
+        
+        <label for={{tag}}> {{tag}}</label><br>
+
+        {% endfor %}
+
+        <input type="submit" value = ''>
+    </form>
+
 </body>
 
 </html>

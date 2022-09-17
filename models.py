@@ -24,7 +24,7 @@ class PostTag(db.Model):
     __tablename__ = "posts_tags"
 
     post_id = db.Column(db.Integer, db.ForeignKey('posts.id'),primary_key=True)
-    tag_id = db.Column(db.Integer, db.ForeignKey('tags.id'),primary_key=True, unique = True)
+    tag_id = db.Column(db.Integer, db.ForeignKey('tags.id'),primary_key=True)
 
 
 class Tag(db.Model):
@@ -32,7 +32,7 @@ class Tag(db.Model):
     __tablename__ = "tags"
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    name = db.Column(db.Text, nullable = False)
+    name = db.Column(db.Text, nullable = False, unique = True)
 
     
 
