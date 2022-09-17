@@ -3,7 +3,7 @@
 <head>
 <title>Blogly Edit User</title>
 <link rel="stylesheet" href="/static/style.css">
-<header>Edit User</header>
+<h1>Edit User</h1>
 </head>
 
 <body>
@@ -27,17 +27,6 @@
         
         <input id = 'FormSubmit' type = 'submit' value = 'submit'>
 
-    </form>
-
-    <form action="">
-        {% for tag in tags %}
-        <input type="checkbox" name={{tag}} >
-        
-        <label for={{tag}}> {{tag}}</label><br>
-
-        {% endfor %}
-
-        <input type="submit" value = ''>
     </form>
 
 </body>
