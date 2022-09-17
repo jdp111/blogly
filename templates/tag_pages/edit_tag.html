@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>edit tag</title>
+</head>
+
+<body>
+    <h1 id = 'posttitle'>Edit a tag</h1>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for msg in messages %}
+                <p class = 'error'>{{msg}}</p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <form action = "/tags/{{tag.id}}/edit", method = "POST">
+    
+        <span>Name</span>
+            <input name = "tag_name" type = "text" value = {{tag.name}}>
+        <input id = 'FormSubmit' type = 'submit' value = 'Edit'>
+
+        
+    </form>
+
+</body>
+
+</html>

@@ -151,16 +151,19 @@ def deletePost(postID):
     db.session.delete(postData)
     db.session.commit()
     return redirect(f"/users/{userID}")
-    
+
+
 #add a page for tags
 @app.route('/tags')
 def getTags():
     tagList = db.session.query(Tag.id, Tag.name).all()
     return render_template('/tag_pages/all_tags.html', tags = tagList)
 
+
 @app.route('/tags/new')
 def addTag():
     return render_template('/tag_pages/add_tag.html')
+
 
 @app.route('/tags/new', methods = ['POST'])
 def submitTag(): 
@@ -172,8 +175,30 @@ def submitTag():
     return redirect('/tags')
 
 
-@app.route('/tags/<tagNum>')
-def showtagInfo(tagNum):
-    oneTag = Tag.query.get_or_404(tagNum)
+@app.route('/tags/<tagID>')
+def showtagInfo(tagID):
+    oneTag = Tag.query.get_or_404(tagID)
     relatedPosts = oneTag.post
     return render_template('/tag_pages/single_tag.html', postData = relatedPosts, tag = oneTag)
+
+
+@app.route('/tags/<tagID>/edit', methods = ['POST'])
+def submitEdit(tagID):
+    newTag = request.form['tag_name']
+
+    if not newTag:
+        flash("tag must not be blank")
+        redirect(f"/tags/{tagID}/edit")
+
+    oldTag = Tag.query.get_or_404(tagID)
+    oldTag.name = newTag
+    db.session.commit()
+
+    return redirect('/tags')
+
+
+@app.route('/tags/<tagID>/edit')
+def EditTag(tagID):
+    oldTag = Tag.query.get_or_404(tagID)
+    return render_template('/tag_pages/edit_tag.html', tag = oldTag )
+
