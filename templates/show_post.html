@@ -25,6 +25,21 @@
             <input id = 'deletepost' type = 'submit' value = 'Delete'>
         </form>
     </div>
+
+
+    <form action="">
+        {% for tag in tags %}
+        <input type="checkbox" name={{tag}} value="Bike">
+        
+        <label for={{tag}}> {{tag}}</label><br>
+
+        {% endfor %}
+
+        <input type="submit" value = ''>
+    </form>
+
+
+
 </body>
 
 </html>

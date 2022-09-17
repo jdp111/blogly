@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Tags</title>
+<link rel="stylesheet" href="/static/style.css">
+<h1 id = 'posttitle'>Tags</h1>
+</head>
+
+<body>
+
+    <ul>
+    {% for tag in tags %}
+    <li>
+        <a href = '/'>{{tag[0]}}</a>
+    </li>
+    {% endfor %}
+    </ul>
+
+
+    <div class = 'buttons'>
+        <form action = "/tags/new">
+            <input id = 'back' type = 'submit' value = 'Add Tag'>
+        </form>
+    </div>
+
+</body>
+
+</html>

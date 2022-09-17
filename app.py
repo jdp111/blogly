@@ -1,7 +1,7 @@
 """Blogly application."""
 
 from flask import Flask, render_template, redirect, request, flash
-from models import db, connect_db, User, Post
+from models import db, connect_db, User, Post, Tag
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = "Shoutitfromthemountaintopzarathustra"
@@ -152,3 +152,21 @@ def deletePost(postID):
     db.session.commit()
     return redirect(f"/users/{userID}")
     
+#add a page for tags
+@app.route('/tags')
+def getTags():
+    tagList = db.session.query(Tag.name).all()
+    return render_template('/tag_pages/all_tags.html', tags = tagList)
+
+@app.route('/tags/new')
+def addTag():
+    return render_template('/tag_pages/add_tag.html')
+
+@app.route('/tags/new', methods = ['POST'])
+def submitTag(): 
+    tagName = request.form['tag_name']
+    newTagObj = Tag(name = tagName)
+    db.session.add(newTagObj)
+    db.session.commit()
+
+    return redirect('/tags')

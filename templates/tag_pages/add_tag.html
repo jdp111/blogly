@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>add tag</title>
+</head>
+
+<body>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for msg in messages %}
+                <p class = 'error'>{{msg}}</p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <form action = "/tags/new", method = "POST">
+    
+        <span>Name</span>
+            <input name = "tag_name" type = "text">
+        <input id = 'FormSubmit' type = 'submit' value = 'submit'>
+
+    </form>
+
+</body>
+
+</html>

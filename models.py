@@ -1,3 +1,4 @@
+from enum import unique
 from flask_sqlalchemy import SQLAlchemy
 import time
 db = SQLAlchemy()
@@ -18,6 +19,23 @@ class User(db.Model):
     
     post = db.relationship('Post', backref="user", cascade = "all,delete-orphan")
 
+class PostTag(db.Model):
+    """relates posts and their tags"""
+    __tablename__ = "posts_tags"
+
+    post_id = db.Column(db.Integer, db.ForeignKey('posts.id'),primary_key=True)
+    tag_id = db.Column(db.Integer, db.ForeignKey('tags.id'),primary_key=True, unique = True)
+
+
+class Tag(db.Model):
+    """list of tags that can be applied to posts"""
+    __tablename__ = "tags"
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    name = db.Column(db.Text, nullable = False)
+
+    
+
 
 class Post(db.Model):
     """list of posts as related to user"""
@@ -28,8 +46,14 @@ class Post(db.Model):
     content = db.Column(db.Text, nullable = False)
     created_at = db.Column(db.DateTime(timezone=True), server_default=db.func.now())
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    
-    
+
+    tag = db.relationship("Tag",secondary='posts_tags',backref='post')
+
+
+
+
+
+
 
 
 
