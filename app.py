@@ -202,3 +202,9 @@ def EditTag(tagID):
     oldTag = Tag.query.get_or_404(tagID)
     return render_template('/tag_pages/edit_tag.html', tag = oldTag )
 
+@app.route('/tags/<tagID>/delete', methods = ['POST'])
+def deleteTag(tagID):
+    oldTag = Tag.query.get_or_404(tagID)
+    db.session.delete(oldTag)
+    db.session.commit()
+    return redirect('/tags')
