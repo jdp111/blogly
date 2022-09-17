@@ -155,7 +155,7 @@ def deletePost(postID):
 #add a page for tags
 @app.route('/tags')
 def getTags():
-    tagList = db.session.query(Tag.name).all()
+    tagList = db.session.query(Tag.id, Tag.name).all()
     return render_template('/tag_pages/all_tags.html', tags = tagList)
 
 @app.route('/tags/new')
@@ -170,3 +170,10 @@ def submitTag():
     db.session.commit()
 
     return redirect('/tags')
+
+
+@app.route('/tags/<tagNum>')
+def showtagInfo(tagNum):
+    oneTag = Tag.query.get_or_404(tagNum)
+    relatedPosts = oneTag.post
+    return render_template('/tag_pages/single_tag.html', postData = relatedPosts, tag = oneTag)

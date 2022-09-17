@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Tags</title>
+<link rel="stylesheet" href="/static/style.css">
+<h1 id = 'posttitle'>Tags</h1>
+</head>
+
+<body>
+
+    <ul>
+    {% for post in postData %}
+    <li>
+        <a href = '/posts/{{post.id}}'>{{post.name}}</a>
+    </li>
+    {% endfor %}
+    </ul>
+
+
+    <div class = 'buttons'>
+        <form action = "/tags/{{tag.id}}/edit">
+            <input id = 'back' type = 'submit' value = 'Edit'>
+        </form>
+
+        <form action = "/tags/{{tag.id}}/delete" method="POST">
+            <input id = 'back' type = 'submit' value = 'Delete'>
+        </form>
+
+    </div>
+
+</body>
+
+</html>
